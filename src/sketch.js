@@ -1,16 +1,49 @@
-var canvas; 
-let bg, pipe, bird;
+//canvas variables
+let width = 600;
+let height = 1000;
+let bg;
+let ground = 805;
 
-function setup() {
-  canvas = createCanvas(600, 1000);
+//classes
+const bird = new Bird();
+
+function setup() 
+{
+  //initial canvas setup
+  const canvas = createCanvas(width, height);
   canvas.position(260, 200);
 
+  //load images
   bg = loadImage('images/background.jpg');
-  pipe = loadImage('images/pipes.png');
-  bird = loadImage('images/bird.png');
-
+  bSprite = loadImage('images/bird.png');
+  
 }
 
-function draw() {
+function draw()
+{
+  game();
+}
+
+function keyPressed()
+{
+  if(key === ' ' && !bird.dead){
+    bird.flap();
+    console.log("flap");
+  }
+  if(key === 'a'){
+    bird.dead = true;
+  }
+  return false;
+}
+
+function game()
+{
   background(bg);
+  
+  ellipse(bird.posX, bird.posY, bird.width, bird.height);
+  bird.gravity(ground);
+
+  if(bird.dead){
+    bird.death();
+  }
 }
