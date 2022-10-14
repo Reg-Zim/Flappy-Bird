@@ -7,6 +7,7 @@ let ceiling = 0;
 
 //classes
 const bird = new Bird();
+var pipes = new Pipes();
 
 function setup() 
 {
@@ -16,7 +17,8 @@ function setup()
 
   //load images
   bg = loadImage('images/background.jpg');
-  bSprite = loadImage('images/bird.png');
+  birdSprite = loadImage('images/bird.png');
+  pipeSprite = loadImage('images/pipes.png');
   
 }
 
@@ -44,8 +46,37 @@ function game()
   background(bg);
   
   ellipse(bird.posX, bird.posY, bird.width, bird.height);
-  bird.gravity(ground, ceiling);
+  rect(pipes.posX, ceiling, pipes.width, pipes.topHeight);
+  rect(pipes.posX, pipes.bottomPlacement, pipes.width, pipes.bottomHeight);
 
+  //bird.gravity();
+  pipes.movement();
+
+  //hitboxes
+  bird.hitX = bird.posX + bird.width/2;
+  bird.hitY = bird.posY + bird.height/2;
+  bird.hitYTop = bird.posY - bird.height/2;
+
+  //gravity/ceiling collision
+  if(bird.hitY >= ground){
+    bird.dead = true;
+    bird.onGround = true;
+
+    bird.posY = constrain(bird.posY, ground, ground);
+  }
+
+  if(bird.hitYTop <= ceiling){
+      bird.dead = true;
+  }
+
+  //pipe collision
+
+  //pipe spawning
+  if(pipes.despawn <= 0){
+    pipes = new Pipes();
+  }
+
+  //game over
   if(bird.dead){
     bird.death();
   }
