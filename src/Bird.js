@@ -2,8 +2,8 @@ class Bird
 {
     constructor()
     {
-        this.height = 50;
-        this.width = 50;
+        this.height = 100;
+        this.width = 100;
         
         this.posX = 300;
         this.posY = 200;
@@ -20,7 +20,7 @@ class Bird
         this.accel = this.mass*0.1;
         this.velocity = 0;
 
-        this.jumpForce = 10;
+        this.jumpForce = 8;
     }
 
     gravity()

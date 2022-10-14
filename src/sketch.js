@@ -18,7 +18,8 @@ function setup()
   //load images
   bg = loadImage('images/background.jpg');
   birdSprite = loadImage('images/bird.png');
-  pipeSprite = loadImage('images/pipes.png');
+  pipeSpriteBottom = loadImage('images/pipeTop.png');
+  pipeSpriteTop = loadImage('images/pipeBottom.png');
   
 }
 
@@ -45,9 +46,14 @@ function game()
 {
   background(bg);
   
-  ellipse(bird.posX, bird.posY, bird.width, bird.height);
-  rect(pipes.posX, ceiling, pipes.width, pipes.topHeight);
-  rect(pipes.posX, pipes.bottomPlacement, pipes.width, pipes.bottomHeight);
+  //ellipse(bird.posX, bird.posY, bird.width, bird.height);
+/*   rect(pipes.posX, ceiling, pipes.width, pipes.topHeight);
+  rect(pipes.posX, pipes.bottomPlacement, pipes.width, pipes.bottomHeight); */
+
+  image(birdSprite, bird.posX, bird.posY, bird.width, bird.height);
+  image(pipeSpriteBottom, pipes.posX, ceiling, pipes.width, pipes.topHeight);
+  image(pipeSpriteTop, pipes.posX, pipes.bottomPlacement, pipes.width, pipes.bottomHeight);
+
 
   //bird.gravity();
   pipes.movement();
