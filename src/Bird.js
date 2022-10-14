@@ -8,6 +8,10 @@ class Bird
         this.posX = 300;
         this.posY = 200;
 
+        this.hitX;
+        this.hitY;
+        this.hitYTop;
+
         this.dead = false;
         this.onGround = false;
 
@@ -19,13 +23,14 @@ class Bird
         this.jumpForce = 10;
     }
 
-    gravity(ground)
+    gravity(ground, ceiling)
     {
         this.velocity+= this.accel;
 
         //hitboxes
         this.hitX = this.posX + this.width/2;
         this.hitY = this.posY + this.height/2;
+        this.hitYTop = this.posY - this.height/2;
 
         this.posY+= this.velocity;
 
@@ -36,6 +41,10 @@ class Bird
             this.posY = constrain(this.posY, ground, ground);
             this.velocity = constrain(this.velocity, 0, 0);
         }
+
+        if(this.hitYTop <= ceiling){
+            this.dead = true;
+        }
     } 
 
     flap()
@@ -45,7 +54,13 @@ class Bird
 
     death()
     {
+        if(!this.onGround){
+            this.velocity = 2;
+            this.posY = constrain(this.posY, 0, ground);
+            this.velocity = 10;
 
+            this.onGround = true;
+        }
         //game over screen
     }
 }

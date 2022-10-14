@@ -3,6 +3,7 @@ let width = 600;
 let height = 1000;
 let bg;
 let ground = 805;
+let ceiling = 0;
 
 //classes
 const bird = new Bird();
@@ -30,6 +31,8 @@ function keyPressed()
     bird.flap();
     console.log("flap");
   }
+
+  //for testing
   if(key === 'a'){
     bird.dead = true;
   }
@@ -41,7 +44,7 @@ function game()
   background(bg);
   
   ellipse(bird.posX, bird.posY, bird.width, bird.height);
-  bird.gravity(ground);
+  bird.gravity(ground, ceiling);
 
   if(bird.dead){
     bird.death();
