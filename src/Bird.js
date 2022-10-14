@@ -5,8 +5,8 @@ class Bird
         this.height = 100;
         this.width = 100;
         
-        this.posX = 300;
-        this.posY = 200;
+        this.posX = 200;
+        this.posY = 300;
 
         this.hitX;
         this.hitY;
@@ -21,6 +21,7 @@ class Bird
         this.velocity = 0;
 
         this.jumpForce = 8;
+        this.score = 0;
     }
 
     gravity()
@@ -34,6 +35,13 @@ class Bird
         this.velocity-= this.jumpForce;
     }
 
+    scoreCount(condition)
+    {
+        if(condition){
+            this.score++;
+        }
+    }
+
     death()
     {
         if(!this.onGround){
@@ -43,5 +51,6 @@ class Bird
         }
 
         //game over screen
+        console.log(this.score);
     }
 }

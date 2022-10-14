@@ -1,18 +1,19 @@
 class Pipes
 {
-    constructor()
+    constructor(top)
     {
         this.width = 80;
         this.topHeight = this.getRandom(150, 400);
 
         this.pipeDistance = 170;
-        this.bottomPlacement = this.topHeight + this.pipeDistance;
+        this.bottomPlacement = top + this.pipeDistance;
         this.bottomHeight = ground - this.bottomPlacement;
 
         this.posX = width;
 
-        this.hitW = 'math';
-        this.hitH = 'more math';
+        this.hitW;
+        this.hitYTop;
+        this.hitYBottom;
 
         this.despawn;
     }

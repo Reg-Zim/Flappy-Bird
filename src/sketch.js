@@ -7,7 +7,8 @@ let ceiling = 0;
 
 //classes
 const bird = new Bird();
-var pipes = new Pipes();
+var pipeTop = new Pipes();
+var pipeBottom = new Pipes(pipeTop.topHeight);
 
 function setup() 
 {
@@ -35,9 +36,10 @@ function keyPressed()
     console.log("flap");
   }
 
-  //for testing
+  //for testing lmao
   if(key === 'a'){
-    bird.dead = true;
+    setup();
+    console.log("test");
   }
   return false;
 }
@@ -45,41 +47,56 @@ function keyPressed()
 function game()
 {
   background(bg);
-  
-  //ellipse(bird.posX, bird.posY, bird.width, bird.height);
-/*   rect(pipes.posX, ceiling, pipes.width, pipes.topHeight);
-  rect(pipes.posX, pipes.bottomPlacement, pipes.width, pipes.bottomHeight); */
 
+  image(pipeSpriteTop, pipeTop.posX, ceiling, pipeTop.width, pipeTop.topHeight);
+  image(pipeSpriteBottom, pipeBottom.posX, pipeBottom.bottomPlacement, pipeBottom.width, pipeBottom.bottomHeight);
   image(birdSprite, bird.posX, bird.posY, bird.width, bird.height);
-  image(pipeSpriteBottom, pipes.posX, ceiling, pipes.width, pipes.topHeight);
-  image(pipeSpriteTop, pipes.posX, pipes.bottomPlacement, pipes.width, pipes.bottomHeight);
 
 
-  //bird.gravity();
-  pipes.movement();
+  bird.gravity();
 
-  //hitboxes
-  bird.hitX = bird.posX + bird.width/2;
-  bird.hitY = bird.posY + bird.height/2;
-  bird.hitYTop = bird.posY - bird.height/2;
+  if(!bird.dead){
+    pipeTop.movement();
+    pipeBottom.movement();
+
+    //bird.scoreCount(condition); FIGURE OUT HOW TO ADD A SCORE COUNT
+  }
+
+  //hitboxes bird
+  bird.hitX = bird.posX + bird.width/2 + bird.width/5;
+  bird.hitY = bird.posY + bird.height/2 + bird.height/5;
+  bird.hitYTop = bird.posY + bird.height/3;
+
+  //hitboxes pipes
+  pipeBottom.hitW = pipeBottom.posX + 5;
+  pipeTop.hitW = pipeTop.posX + 5;
+  pipeTop.hitYTop = pipeTop.topHeight - 15;
+  pipeBottom.hitYBottom = pipeBottom.bottomPlacement + 20;
+
+  let topHit = ((bird.hitX >= pipeTop.hitW && bird.hitX <= pipeTop.hitW+80) && (bird.hitYTop <= pipeTop.hitYTop));
+  let bottomHit = ((bird.hitX >= pipeBottom.hitW && bird.hitX <= pipeBottom.hitW+80) && (bird.hitY >= pipeBottom.hitYBottom));
 
   //gravity/ceiling collision
   if(bird.hitY >= ground){
     bird.dead = true;
     bird.onGround = true;
 
-    bird.posY = constrain(bird.posY, ground, ground);
+    bird.posY = constrain(bird.posY, 750, 750);
   }
 
   if(bird.hitYTop <= ceiling){
-      bird.dead = true;
+      bird.dead = true;   
   }
 
   //pipe collision
+  if(topHit || bottomHit){
+    bird.dead = true;
+  }
 
   //pipe spawning
-  if(pipes.despawn <= 0){
-    pipes = new Pipes();
+  if(pipeTop.despawn <= 0 && pipeBottom.despawn <= 0){
+    pipeTop = new Pipes();
+    pipeBottom = new Pipes(pipeTop.topHeight);
   }
 
   //game over
