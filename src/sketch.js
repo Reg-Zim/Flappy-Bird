@@ -36,7 +36,7 @@ function keyPressed()
     console.log("flap");
   }
 
-  //for testing lmao
+  //for testing lmao --do want to add a restart button tho...--
   if(key === 'a'){
     setup();
     console.log("test");
@@ -48,9 +48,15 @@ function game()
 {
   background(bg);
 
+  //sprites
   image(pipeSpriteTop, pipeTop.posX, ceiling, pipeTop.width, pipeTop.topHeight);
   image(pipeSpriteBottom, pipeBottom.posX, pipeBottom.bottomPlacement, pipeBottom.width, pipeBottom.bottomHeight);
   image(birdSprite, bird.posX, bird.posY, bird.width, bird.height);
+
+  //show score
+  textSize(50);
+  text(bird.score, width/2, 200);
+  fill(255,255,255);
 
 
   bird.gravity();
@@ -59,7 +65,7 @@ function game()
     pipeTop.movement();
     pipeBottom.movement();
 
-    //bird.scoreCount(condition); FIGURE OUT HOW TO ADD A SCORE COUNT
+    //bird.scoreCount(condition); //FIGURE OUT HOW TO ADD A SCORE COUNT
   }
 
   //hitboxes bird
@@ -73,15 +79,15 @@ function game()
   pipeTop.hitYTop = pipeTop.topHeight - 15;
   pipeBottom.hitYBottom = pipeBottom.bottomPlacement + 20;
 
-  let topHit = ((bird.hitX >= pipeTop.hitW && bird.hitX <= pipeTop.hitW+80) && (bird.hitYTop <= pipeTop.hitYTop));
-  let bottomHit = ((bird.hitX >= pipeBottom.hitW && bird.hitX <= pipeBottom.hitW+80) && (bird.hitY >= pipeBottom.hitYBottom));
+  let topHit = ((bird.hitX >= pipeTop.hitW && bird.hitX <= pipeTop.hitW+pipeTop.width) && (bird.hitYTop <= pipeTop.hitYTop));
+  let bottomHit = ((bird.hitX >= pipeBottom.hitW && bird.hitX <= pipeBottom.hitW+pipeBottom.width) && (bird.hitY >= pipeBottom.hitYBottom));
 
   //gravity/ceiling collision
   if(bird.hitY >= ground){
     bird.dead = true;
     bird.onGround = true;
 
-    bird.posY = constrain(bird.posY, 750, 750);
+    bird.posY = constrain(bird.posY, 750, 750); //<-- dunno why 750, but it works so don't touch it xdd
   }
 
   if(bird.hitYTop <= ceiling){
