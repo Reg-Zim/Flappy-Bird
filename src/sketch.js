@@ -5,7 +5,7 @@ let bg;
 let ground = 805;
 let ceiling = 0;
 
-//classes
+//classes (this should probably go in setup)
 const bird = new Bird();
 var pipeTop = new Pipes();
 var pipeBottom = new Pipes(pipeTop.topHeight);
@@ -105,7 +105,7 @@ function game()
     pipeBottom = new Pipes(pipeTop.topHeight);
   }
 
-  //game over
+  //game over (clean up/reset function to be added (comes before setup))
   if(bird.dead){
     bird.death();
   }
